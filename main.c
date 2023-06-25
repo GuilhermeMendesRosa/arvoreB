@@ -27,6 +27,13 @@ No* divideNo(ArvoreB*, No*);
 void adicionaChaveRecursivo(ArvoreB*, No*, No*, int);
 void adicionaChave(ArvoreB*, int);
 
+// Implementação de remoção
+
+void removeChave(ArvoreB* arvore, int chave);
+void removeChaveRecursivo(ArvoreB* arvore, No* no, int chave);
+void removerChaveNo(No* no, int indice);
+void redistribuirChaves(No* pai, No* filhoEsq, No* filhoDir, int indiceFilhoEsq);
+
 ArvoreB* criaArvore(int ordem) {
     ArvoreB* a = malloc(sizeof(ArvoreB));
     a->ordem = ordem;
@@ -194,47 +201,6 @@ void adicionaChave(ArvoreB* arvore, int chave) {
     adicionaChaveRecursivo(arvore, no, NULL, chave);
 }
 
-void analisarComplexidadeArvoreB(int ordem, int tamanhoMax, int numConjuntos) {
-    ArvoreB* arvore = criaArvore(ordem);
-
-    printf("tamanho,adicao");
-
-    for (int i = 1; i <= tamanhoMax; i++) {
-        int totalAdicao = 0;
-        //int totalRemocao = 0;
-
-        for (int k = 0; k < numConjuntos; k++) {
-            contador = 0;
-
-            for (int j = 0; j < i; j++)
-                adicionaChave(arvore, rand() % i);
-
-            totalAdicao += contador;
-
-            /*contador = 0;*/
-
-            /*for (int j = 0; j < i; j++)
-                removerChave(arvore, rand() % i);*/
-
-            //totalRemocao += contador;
-        }
-
-        int mediaAdicao = totalAdicao / numConjuntos;
-        //int mediaRemocao = totalRemocao / numConjuntos;
-
-        printf("\n%d,%d", i, mediaAdicao);
-    }
-
-    printf("\n--------\n");
-}
-
-// Implementação de remoção
-
-void removeChave(ArvoreB* arvore, int chave);
-void removeChaveRecursivo(ArvoreB* arvore, No* no, int chave);
-void removerChaveNo(No* no, int indice);
-void redistribuirChaves(No* pai, No* filhoEsq, No* filhoDir, int indiceFilhoEsq);
-
 void removeChave(ArvoreB* arvore, int chave) {
     removeChaveRecursivo(arvore, arvore->raiz, chave);
 }
@@ -297,26 +263,73 @@ void redistribuirChaves(No* pai, No* filhoEsq, No* filhoDir, int indiceFilhoEsq)
     filhoDir->total--;
 }
 
+void analisarComplexidadeArvoreB(int ordem, int tamanhoMax, int numConjuntos) {
+    ArvoreB* arvore = criaArvore(ordem);
+
+    printf("tamanho,adicao");
+
+    for (int i = 1; i <= tamanhoMax; i++) {
+        int totalAdicao = 0;
+        int totalRemocao = 0;
+
+        for (int k = 0; k < numConjuntos; k++) {
+            contador = 0;
+
+            for (int j = 0; j < i; j++)
+                adicionaChave(arvore, rand() % i);
+
+            totalAdicao += contador;
+
+            contador = 0;
+
+            for (int j = 0; j < i; j++)
+                removeChave(arvore, rand() % i);
+
+            totalRemocao += contador;
+        }
+
+        int mediaAdicao = totalAdicao / numConjuntos;
+        int mediaRemocao = totalRemocao / numConjuntos;
+
+        printf("\n%d,%d", i, mediaAdicao);
+        printf("\n%d,%d", i, mediaRemocao);
+    }
+
+    printf("\n--------\n");
+}
+
+// int main() {
+//     ArvoreB* arvore = criaArvore(1);
+    
+//     contador = 0;
+
+//     adicionaChave(arvore, 12);
+//     adicionaChave(arvore, 3);
+//     adicionaChave(arvore, 5);
+//     adicionaChave(arvore, 7);
+//     adicionaChave(arvore, 15);
+//     adicionaChave(arvore, 99);
+//     adicionaChave(arvore, 1);
+    
+//     percorreArvore(arvore->raiz);
+
+//     int chaveASerRemovida = 7;
+//     printf("\nRemovendo %d!\n", chaveASerRemovida);
+//     removeChave(arvore, chaveASerRemovida);
+
+//     percorreArvore(arvore->raiz);
+
+// }
 
 int main() {
-    ArvoreB* arvore = criaArvore(1);
-    
-    contador = 0;
+    srand(time(NULL));
 
-    adicionaChave(arvore, 12);
-    adicionaChave(arvore, 3);
-    adicionaChave(arvore, 5);
-    adicionaChave(arvore, 7);
-    adicionaChave(arvore, 15);
-    adicionaChave(arvore, 99);
-    adicionaChave(arvore, 1);
-    
-    percorreArvore(arvore->raiz);
+    int tamanho = 1000;
+    int numConjuntos = 10;
 
-    int chaveASerRemovida = 7;
-    printf("\nRemovendo %d!\n", chaveASerRemovida);
-    removeChave(arvore, chaveASerRemovida);
+    analisarComplexidadeArvoreB(1, tamanho, numConjuntos);
+    analisarComplexidadeArvoreB(5, tamanho, numConjuntos);
+    analisarComplexidadeArvoreB(10, tamanho, numConjuntos);
 
-    percorreArvore(arvore->raiz);
-
+    return 0;
 }
