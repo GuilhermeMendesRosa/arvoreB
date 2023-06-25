@@ -90,7 +90,7 @@ int pesquisaBinaria(No* no, int chave) {
             inicio = meio + 1;
         }
     }
-    return inicio; //n�o encontrou	
+    return inicio; //n o encontrou	
 }
 
 int localizaChave(ArvoreB* arvore, int chave) {
@@ -107,7 +107,7 @@ int localizaChave(ArvoreB* arvore, int chave) {
         }
     }
 
-    return 0; //n�o encontrou	
+    return 0; //n o encontrou	
 }
 
 No* localizaNo(ArvoreB* arvore, int chave) {
@@ -119,12 +119,12 @@ No* localizaNo(ArvoreB* arvore, int chave) {
         int i = pesquisaBinaria(no, chave);
 
         if (no->filhos[i] == NULL)
-            return no; //encontrou n�
+            return no; //encontrou n 
         else
             no = no->filhos[i];
     }
 
-    return NULL; //n�o encontrou nenhum n�
+    return NULL; //n o encontrou nenhum n 
 }
 
 void adicionaChaveNo(No* no, No* novo, int chave) {
@@ -225,11 +225,13 @@ void removeChaveRecursivo(ArvoreB* arvore, No* no, int chave) {
 
             // Remove a chave do nó mais à esquerda recursivamente
             removeChaveRecursivo(arvore, noSubstituto, noSubstituto->chaves[0]);
-        } else {
+        }
+        else {
             // Caso 2: O nó contém a chave e é uma folha da árvore B
             removerChaveNo(no, indice);
         }
-    } else {
+    }
+    else {
         // Caso 3: A chave não está no nó atual
         removeChaveRecursivo(arvore, no->filhos[indice], chave);
     }
@@ -266,7 +268,7 @@ void redistribuirChaves(No* pai, No* filhoEsq, No* filhoDir, int indiceFilhoEsq)
 void analisarComplexidadeArvoreB(int ordem, int tamanhoMax, int numConjuntos) {
     ArvoreB* arvore = criaArvore(ordem);
 
-    printf("tamanho,adicao");
+    printf("tamanho,adicao,remocao");
 
     for (int i = 1; i <= tamanhoMax; i++) {
         int totalAdicao = 0;
@@ -291,35 +293,11 @@ void analisarComplexidadeArvoreB(int ordem, int tamanhoMax, int numConjuntos) {
         int mediaAdicao = totalAdicao / numConjuntos;
         int mediaRemocao = totalRemocao / numConjuntos;
 
-        printf("\n%d,%d", i, mediaAdicao);
-        printf("\n%d,%d", i, mediaRemocao);
+        printf("\n%d,%d,%d", i, mediaAdicao, mediaRemocao);
     }
 
     printf("\n--------\n");
 }
-
-// int main() {
-//     ArvoreB* arvore = criaArvore(1);
-    
-//     contador = 0;
-
-//     adicionaChave(arvore, 12);
-//     adicionaChave(arvore, 3);
-//     adicionaChave(arvore, 5);
-//     adicionaChave(arvore, 7);
-//     adicionaChave(arvore, 15);
-//     adicionaChave(arvore, 99);
-//     adicionaChave(arvore, 1);
-    
-//     percorreArvore(arvore->raiz);
-
-//     int chaveASerRemovida = 7;
-//     printf("\nRemovendo %d!\n", chaveASerRemovida);
-//     removeChave(arvore, chaveASerRemovida);
-
-//     percorreArvore(arvore->raiz);
-
-// }
 
 int main() {
     srand(time(NULL));
